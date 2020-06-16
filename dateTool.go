@@ -290,3 +290,13 @@ func GetDayAndWeek(begin, max int, all []string) ([]string, []string, []string) 
 	}
 	return rr, rd, week
 }
+
+// GetNowDateMin 获取一天最小时间
+func GetNowDateMin() string {
+	return time.Now().Format("2006-01-02") + " 00:00:00"
+}
+
+// GetNowDateMax 获取当天最大时间
+func GetNowDateMax() string {
+	return time.Now().Format("2006-01-02") + " 23:59:59"
+}
