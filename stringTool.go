@@ -119,3 +119,14 @@ func TelPhoneNumberCheck(phoneNumber string) bool {
 	reg := regexp.MustCompile(regular)
 	return reg.MatchString(phoneNumber)
 }
+
+// MobileSafe 手机号加密
+func MobileSafe(mobile string) string {
+	if len(mobile) >= 11 {
+		mo := mobile[3 : len(mobile)-4]
+		safe := "****"
+		mob := strings.Replace(mobile, mo, safe, 1)
+		return mob
+	}
+	return mobile
+}
