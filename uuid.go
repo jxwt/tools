@@ -9,8 +9,7 @@ import (
 )
 
 func GetUuid() uuid.UUID {
-	uuid, _ := uuid.NewV4()
-	return uuid
+	return uuid.NewV4()
 }
 
 /**
