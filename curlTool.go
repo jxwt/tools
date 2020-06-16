@@ -59,8 +59,8 @@ func HttpBeegoPost(url string, params map[string]string, header map[string]strin
 	return body, nil
 }
 
-// HTTPBeegoGet http get
-func HTTPBeegoGet(url string, header map[string]string) ([]byte, error) {
+// HttpBeegoGet http get
+func HttpBeegoGet(url string, header map[string]string) ([]byte, error) {
 	req := httplib.Get(url)
 	for k, v := range header {
 		req.Header(k, v)
