@@ -19,8 +19,8 @@ func GetRequestAgentType(ctx *context.Context) string {
 	return "pc"
 }
 
-// HTTPBeegoJSONPost http json post
-func HTTPBeegoJSONPost(url string, jsonBody string, header map[string]string) ([]byte, error) {
+// HttpBeegoJsonPost http json post
+func HttpBeegoJsonPost(url string, jsonBody string, header map[string]string) ([]byte, error) {
 	req := httplib.Post(url)
 	req.Body(jsonBody)
 	for k, v := range header {
@@ -34,8 +34,8 @@ func HTTPBeegoJSONPost(url string, jsonBody string, header map[string]string) ([
 	return body, err
 }
 
-// HTTPBeegoQueryPost http query post
-func HTTPBeegoQueryPost(url string, params map[string]string, header map[string]string) string {
+// HttpBeegoPost http query post
+func HttpBeegoPost(url string, params map[string]string, header map[string]string) ([]byte, error) {
 	req := httplib.Post(url)
 
 	for k, v := range params {
@@ -45,14 +45,18 @@ func HTTPBeegoQueryPost(url string, params map[string]string, header map[string]
 		req.Header(k, v)
 	}
 	resp, err := req.Response()
-	if resp != nil {
-		defer resp.Body.Close()
-	}
 	if err != nil {
-		return ""
+		return nil, err
 	}
-	body, _ := ioutil.ReadAll(resp.Body)
-	return string(body)
+	defer resp.Body.Close()
+	if err != nil {
+		return nil, err
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	return body, nil
 }
 
 // HTTPBeegoGet http get

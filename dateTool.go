@@ -23,11 +23,6 @@ func TimeFormatToDate(d string) string {
 	return t.Format("2006-01-02")
 }
 
-// GetTimestampStr 获取当前时间戳字符串
-func GetTimestampStr() string {
-	return time.Now().Format("20060102150405")
-}
-
 // GetTimeNumberByFormat 根据formatStr赋予时间字符串
 func GetTimeNumberByFormat(inputTime time.Time, formatStr string) string {
 	dateStr := formatStr
@@ -45,6 +40,11 @@ func GetSubTime(start string, end string, format string) time.Duration {
 	st, _ := time.Parse(format, start)
 	en, _ := time.Parse(format, end)
 	return en.Sub(st)
+}
+
+// GetTimeNumber .
+func GetTimeNumber() string {
+	return time.Now().Format("20060102150405")
 }
 
 // GetFirstDateOfMonth 获取传入的时间所在月份的第一天，即某月第一天的0点。如传入time.Now(), 返回当前月份的第一天0点时间。

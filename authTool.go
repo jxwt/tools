@@ -12,6 +12,10 @@ type AuthTool struct {
 	Claims         jwt.MapClaims
 }
 
+func NewAuthTool() *AuthTool {
+	return new(AuthTool)
+}
+
 func (i *AuthTool) SetKey(keys ...string) *AuthTool {
 	if len(keys) == 0 {
 		i.Key = []byte("jhsno1")

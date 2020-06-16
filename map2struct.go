@@ -2,8 +2,11 @@ package tools
 
 import (
 	"encoding/json"
+	"fmt"
 	"reflect"
+	"sort"
 	"strconv"
+	"strings"
 )
 
 // Map2Struct map转struct
@@ -91,4 +94,52 @@ func Interface2String(value interface{}) string {
 	default:
 		return ""
 	}
+}
+
+// MapToSign .
+func MapToSign(param map[string]interface{}) string {
+	data := make(map[string]string)
+	var keys []string
+	for k, v := range param {
+		if k != "" && v != nil && v != "" {
+			keys = append(keys, k)
+			switch v.(type) {
+			case string:
+				data[k] = fmt.Sprintf(`%s=%s`, k, v)
+				break
+			case int:
+				data[k] = fmt.Sprintf(`%s=%d`, k, v)
+				break
+			case int64:
+				data[k] = fmt.Sprintf(`%s=%d`, k, v)
+				break
+			case uint:
+				data[k] = fmt.Sprintf(`%s=%d`, k, v)
+			case float64:
+				float := strconv.FormatFloat(v.(float64), 'f', -1, 64)
+				data[k] = fmt.Sprintf(`%s=%s`, k, float)
+				break
+			case bool:
+				data[k] = fmt.Sprintf(`%s=%t`, k, v)
+				break
+			default:
+				marshal, _ := json.Marshal(v)
+				data[k] = fmt.Sprintf(`%s=%s`, k, string(marshal))
+			}
+		}
+	}
+	sort.Strings(keys)
+	var sign []string
+	for _, key := range keys {
+		sign = append(sign, data[key])
+	}
+	signData := strings.Join(sign, "&")
+	return signData
+}
+
+func Struct2JsonMap(obj interface{}) map[string]interface{} {
+	bytes, _ := json.Marshal(obj)
+	var mapResult map[string]interface{}
+	_ = json.Unmarshal(bytes, &mapResult)
+	return mapResult
 }
