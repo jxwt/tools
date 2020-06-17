@@ -12,7 +12,10 @@ import (
 // IntToStringLength .
 func IntToStringLength(num int, length int) string {
 	s := strconv.Itoa(num)
-	for i := length; i < len(s); i++ {
+	if len(s) > length {
+		return s[:length]
+	}
+	for i := len(s); i < length; i++ {
 		s = "0" + s
 	}
 	return s
