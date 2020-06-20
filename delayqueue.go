@@ -4,8 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/astaxie/beego/logs"
-	"parking_mall/databases/redis"
-	"parking_mall/initial/config"
+	"github.com/jxwt/tools/redis"
 	"sync"
 	"time"
 )
@@ -18,11 +17,11 @@ type DelayQueue struct {
 	Handles map[string]Callback
 }
 
-func NewQueue() *DelayQueue {
+func NewQueue(isMaster bool) *DelayQueue {
 	q := new(DelayQueue)
 	q.Handles = make(map[string]Callback)
 
-	if config.CfgApp.IsMaster {
+	if isMaster {
 		go q.DelayHandle()
 	}
 	go q.ReadyHandle()
