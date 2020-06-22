@@ -13,19 +13,24 @@ type SmsSendResult struct {
 	Custid string `json:"custid"`
 }
 
-func SmsSend(smsURL string, mobile string, content string) *SmsSendResult {
+type Sender struct {
+	UserID string
+	ApiKey string
+}
+
+func (s *Sender) SmsSend(smsURL string, mobile string, content string) *SmsSendResult {
 	smsSendResult := new(SmsSendResult)
-	result, _ := tools.HttpBeegoPost(smsURL, smsApiPostData(mobile, content), nil)
+	result, _ := tools.HttpBeegoPost(smsURL, s.smsApiPostData(mobile, content), nil)
 	json.Unmarshal(result, smsSendResult)
 
 	return smsSendResult
 }
 
-func smsApiPostData(mobile string, content string) map[string]string {
+func (s *Sender) smsApiPostData(mobile string, content string) map[string]string {
 	postData := make(map[string]string)
-	postData["userid"] = "E101HS"
-	postData["pwd"] = getSmsPassword("E101HS")
-	postData["apikey"] = "596a36315dfc6e629099a427175acd6c"
+	postData["userid"] = s.UserID
+	postData["pwd"] = getSmsPassword(s.UserID)
+	postData["apikey"] = s.ApiKey
 	postData["mobile"] = "0086" + mobile
 	postData["content"] = tools.GbkToUtf8(content)
 	//postData["content"]= content
