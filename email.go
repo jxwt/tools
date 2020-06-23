@@ -1,18 +1,18 @@
-package email
+package tools
 
 import (
 	"gopkg.in/gomail.v2"
 	"strconv"
 )
 
-type Sender struct {
+type EmailSender struct {
 	User string // 用户
 	Pass string // 密码或者授权码
 	Host string
 	Port string
 }
 
-func (s *Sender) SendMail(mailTo []string, subject string, body string) error {
+func (s *EmailSender) SendMail(mailTo []string, subject string, body string) error {
 	//定义邮箱服务器连接信息，如果是阿里邮箱 pass填密码，qq邮箱填授权码
 	mailConn := map[string]string{
 		"user": s.User,

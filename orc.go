@@ -1,9 +1,8 @@
-package ocr
+package tools
 
 import (
 	"encoding/json"
 	"errors"
-	"github.com/jxwt/tools"
 )
 
 const apiBusinessLicense = "https//dm-58.data.aliyun.com/rest/160601/ocr/ocr_business_license.json"
@@ -36,7 +35,7 @@ func BusinessLicense(url string) (*BusinessLicenseResponse, error) {
 		Image: url,
 	}
 	data, _ := json.Marshal(req)
-	body, err := tools.HttpBeegoJsonPost(apiBusinessLicense, string(data), nil)
+	body, err := HttpBeegoJsonPost(apiBusinessLicense, string(data), nil)
 	if err != nil {
 		return nil, err
 	}

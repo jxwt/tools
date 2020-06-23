@@ -1,4 +1,4 @@
-package kafka
+package tools
 
 import (
 	"encoding/json"
@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-type Sender struct {
+type KafkaSender struct {
 	Uri      string
 	UserName string
 	Password string
@@ -27,7 +27,7 @@ type KafkaSendMsg struct {
 	Partition   int
 }
 
-func (s *Sender) KafkaCreateTopic(topic string) error {
+func (s *KafkaSender) KafkaCreateTopic(topic string) error {
 	msg := &KafkaSendMsg{
 		BrokerList: s.Uri,
 		Topic:      topic,
@@ -77,7 +77,7 @@ func (s *Sender) KafkaCreateTopic(topic string) error {
 	return nil
 }
 
-func (s *Sender) KafkaSend(parkLotId uint, params map[string]interface{}) error {
+func (s *KafkaSender) KafkaSend(parkLotId uint, params map[string]interface{}) error {
 	data, err := json.Marshal(params)
 	msg := &KafkaSendMsg{
 		BrokerList: s.Uri,
