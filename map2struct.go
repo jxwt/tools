@@ -9,38 +9,6 @@ import (
 	"strings"
 )
 
-func DataToStruct(data map[string]string, out interface{}) error {
-	ss := reflect.ValueOf(out).Elem()
-	for i := 0; i < ss.NumField(); i++ {
-		val := data[ss.Type().Field(i).Name]
-		name := ss.Type().Field(i).Name
-		switch ss.Field(i).Kind() {
-		case reflect.String:
-			ss.FieldByName(name).SetString(val)
-		case reflect.Int, reflect.Int16, reflect.Int32, reflect.Int64:
-			i, err := strconv.Atoi(val)
-			if err != nil {
-				continue
-			}
-			ss.FieldByName(name).SetInt(int64(i))
-		case reflect.Uint16, reflect.Uint32, reflect.Uint64:
-			i, err := strconv.Atoi(val)
-			if err != nil {
-				continue
-			}
-			ss.FieldByName(name).SetUint(uint64(i))
-		case reflect.Float32, reflect.Float64:
-			f, err := strconv.ParseFloat(val, 64)
-			if err != nil {
-				continue
-			}
-			ss.FieldByName(name).SetFloat(f)
-		default:
-		}
-	}
-	return nil
-}
-
 // Map2Struct map转struct
 func Map2Struct(data map[string]string, out interface{}) error {
 	ss := reflect.ValueOf(out).Elem()
