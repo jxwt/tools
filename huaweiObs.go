@@ -2,7 +2,6 @@ package tools
 
 import (
 	"errors"
-	"fmt"
 	"github.com/jxwt/tools/obs"
 	"io"
 	"strings"
@@ -29,7 +28,6 @@ func InitObs(accessKey, secretKey, endpoint, bucket string) {
 		obsHandle.Client = c
 		obsHandle.Bucket = bucket
 		obsHandle.Prefix = "https://" + obsHandle.Bucket + "." + obsHandle.Endpoint[strings.Index(obsHandle.Endpoint, "o"):] + "/"
-		fmt.Println(obsHandle.Prefix)
 	}
 }
 
