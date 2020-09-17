@@ -53,12 +53,12 @@ func (s *KafkaSender) KafkaCreateTopic(topic string) error {
 		return err
 	}
 	r := sarama.Resource{ResourceType: sarama.AclResourceTopic, ResourceName: topic}
-	a := sarama.Acl{Principal: "User:reader01", Host: "*", Operation: sarama.AclOperationRead, PermissionType: sarama.AclPermissionAllow}
+	a := sarama.Acl{Principal: "User:reader", Host: "*", Operation: sarama.AclOperationRead, PermissionType: sarama.AclPermissionAllow}
 	err = admin.CreateACL(r, a)
 	if err != nil {
 		panic(err)
 	}
-	a.Principal = "User:writer01"
+	a.Principal = "User:writer"
 	a.Host = "*"
 	a.Operation = sarama.AclOperationAll
 	a.PermissionType = sarama.AclPermissionAllow
