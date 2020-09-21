@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/Shopify/sarama"
 	"github.com/astaxie/beego/logs"
-	"strconv"
 	"strings"
 )
 
@@ -77,11 +76,11 @@ func (s *KafkaSender) KafkaCreateTopic(topic string) error {
 	return nil
 }
 
-func (s *KafkaSender) KafkaSend(parkLotId uint, params map[string]interface{}) error {
+func (s *KafkaSender) KafkaSend(topic string, params map[string]interface{}) error {
 	data, err := json.Marshal(params)
 	msg := &KafkaSendMsg{
 		BrokerList: s.Uri,
-		Topic:      "parkLot_" + strconv.Itoa(int(parkLotId)),
+		Topic:      topic,
 		Value:      string(data),
 		UserName:   s.UserName,
 		Password:   s.Password,
