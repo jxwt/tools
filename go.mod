@@ -3,6 +3,7 @@ module github.com/jxwt/tools
 go 1.14
 
 require (
+	github.com/DeanThompson/jpush-api-go-client v0.0.0-20160606124945-0c253969b0ca // indirect
 	github.com/Shopify/sarama v1.26.4
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.3+incompatible
 	github.com/astaxie/beego v1.12.1

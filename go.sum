@@ -1,3 +1,5 @@
+github.com/DeanThompson/jpush-api-go-client v0.0.0-20160606124945-0c253969b0ca h1:M8qbQfMN4VNFfRZGrbq7ogBgtrahEyG74Ne2fYZJlow=
+github.com/DeanThompson/jpush-api-go-client v0.0.0-20160606124945-0c253969b0ca/go.mod h1:Fe5JWP19DeSTKgEr+isgDaGNGFvwnd4SvDH1wgU/emA=
 github.com/Knetic/govaluate v3.0.0+incompatible/go.mod h1:r7JcOSlj0wfOMncg0iLm8Leh48TZaKVeNIfJntJ2wa0=
 github.com/OwnLocal/goes v1.0.0/go.mod h1:8rIFjBGTue3lCU0wplczcUgt9Gxgrkkrw7etMIcn8TM=
 github.com/Shopify/sarama v1.26.4 h1:+17TxUq/PJEAfZAll0T7XJjSgQWCpaQSoki/x5yN8o8=
