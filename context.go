@@ -3,7 +3,7 @@ package tools
 import (
 	"encoding/json"
 	"github.com/astaxie/beego/context"
-	"github.com/astaxie/beego/logs"
+	"io/ioutil"
 	"net/url"
 	"reflect"
 	"strconv"
@@ -27,35 +27,21 @@ func ContextGetToken(auth *AuthTool, ctx *context.Context) string {
 }
 
 func CtxToJson(ctx *context.Context, obj interface{}) error {
-	data := ctx.Input.RequestBody
-	logs.Warning(string(data))
-	var err error
-	if len(data) == 0 {
-		params := CtxGetSingleParams(ctx, obj)
-		jsonData, err := json.Marshal(params)
-		err = json.Unmarshal(jsonData, obj)
-		if err != nil {
-			return err
-		}
-	} else {
-		err = json.Unmarshal(data, obj)
-		if err != nil {
-			params := CtxGetSingleParams(ctx, obj)
-			jsonData, err := json.Marshal(params)
-			err = json.Unmarshal(jsonData, obj)
-			if err != nil {
-				return err
-			}
-		}
-	}
-	return nil
-}
+	body, _ := ioutil.ReadAll(ctx.Request.Body)
 
-// 获取字段input单value
-func CtxGetSingleParams(ctx *context.Context, obj interface{}) map[string]interface{} {
-	params := make(map[string]interface{})
+	if len(body) != 0 {
+		err := json.Unmarshal(body, obj)
+		return err
+	}
+
+	var values url.Values
+	if ctx.Request.Method == "GET" {
+		values  = ctx.Request.URL.Query()
+	} else if ctx.Request.Method == "POST" {
+		values = ctx.Request.PostForm
+	}
 	t := reflect.TypeOf(obj).Elem()
-	values := getValues(ctx)
+	params := make(map[string]interface{})
 	if len(values) == 0 {
 		for k, v := range ctx.Input.Params() {
 			params[k] = parseObjectValue(t, k, v)
@@ -65,18 +51,16 @@ func CtxGetSingleParams(ctx *context.Context, obj interface{}) map[string]interf
 			params[k] = parseObjectValue(t, k, v[0])
 		}
 	}
-	logs.Warning(params)
-	return params
+	jsonData, err := json.Marshal(params)
+	err = json.Unmarshal(jsonData, obj)
+
+	return err
 }
 
 func parseObjectValue(t reflect.Type, k string, v string) interface{} {
 	var val interface{} = v
 	if strings.ToUpper(k) == "ID" {
 		val, _ = strconv.Atoi(v)
-		return val
-	}
-	if strings.ToUpper(k) == "PERPAGE" || strings.ToUpper(k) == "PAGE" {
-		val = StringToInt64(v)
 		return val
 	}
 	for index := 0; index < t.NumField(); index++ {
@@ -94,15 +78,4 @@ func parseObjectValue(t reflect.Type, k string, v string) interface{} {
 	}
 
 	return val
-}
-
-// 获取全字段的values值
-func getValues(ctx *context.Context) url.Values {
-	var values url.Values
-	if ctx.Request.Method == "POST" {
-		values = ctx.Request.PostForm
-	} else if ctx.Request.Method == "GET" {
-		values = ctx.Request.URL.Query()
-	}
-	return values
 }

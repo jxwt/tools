@@ -47,17 +47,17 @@ func (s *KafkaSender) KafkaCreateTopic(topic string) error {
 	if err != nil {
 		return err
 	}
-	err = admin.CreateTopic(topic, &sarama.TopicDetail{NumPartitions: 1, ReplicationFactor: 1}, false)
-	if err != nil {
-		return err
-	}
+	//err = admin.CreateTopic(topic, &sarama.TopicDetail{NumPartitions: 1, ReplicationFactor: 1}, false)
+	//if err != nil {
+	//	return err
+	//}
 	r := sarama.Resource{ResourceType: sarama.AclResourceTopic, ResourceName: topic}
-	a := sarama.Acl{Principal: "User:reader", Host: "*", Operation: sarama.AclOperationRead, PermissionType: sarama.AclPermissionAllow}
+	a := sarama.Acl{Principal: "User:reader01", Host: "*", Operation: sarama.AclOperationRead, PermissionType: sarama.AclPermissionAllow}
 	err = admin.CreateACL(r, a)
 	if err != nil {
 		panic(err)
 	}
-	a.Principal = "User:writer"
+	a.Principal = "User:writer01"
 	a.Host = "*"
 	a.Operation = sarama.AclOperationAll
 	a.PermissionType = sarama.AclPermissionAllow
