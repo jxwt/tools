@@ -36,3 +36,4 @@ func VerifyEmailFormat(email string) bool {
 	reg := regexp.MustCompile(pattern)
 	return reg.MatchString(email)
 }
+

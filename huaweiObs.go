@@ -1,6 +1,8 @@
 package tools
 
 import (
+	"bytes"
+	"encoding/csv"
 	"errors"
 	"github.com/jxwt/tools/obs"
 	"io"
@@ -59,4 +61,22 @@ func ObsDownloadFile(name string) (io.ReadCloser, error) {
 		return nil, err
 	}
 	return output.Body, nil
+}
+
+func MakeCsv(fileName string, head []string, data [][]string) (string, error) {
+	f := bytes.NewBuffer(nil)
+	w := csv.NewWriter(f)         // 创建一个新的写入文件流
+	f.WriteString("\xEF\xBB\xBF") // 写入UTF-8 BOM
+	w.Write(head)
+
+	// 数据拼接
+	for _, v := range data {
+		w.Write(v)
+	}
+	w.Flush()
+	url, err := ObsUploadFile(fileName, f)
+	if err != nil {
+		return "", err
+	}
+	return url, nil
 }
