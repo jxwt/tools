@@ -33,6 +33,11 @@ func CtxToJson(ctx *context.Context, obj interface{}) error {
 		err := json.Unmarshal(body, obj)
 		return err
 	}
+	body  = ctx.Input.RequestBody
+	if len(body) != 0 {
+		err := json.Unmarshal(body, obj)
+		return err
+	}
 
 	var values url.Values
 	if ctx.Request.Method == "GET" {
