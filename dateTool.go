@@ -50,7 +50,7 @@ func GetTimeNumber() string {
 // GetFirstDateOfMonth 获取传入的时间所在月份的第一天，即某月第一天的0点。如传入time.Now(), 返回当前月份的第一天0点时间。
 func GetFirstDateOfMonth(d time.Time) time.Time {
 	d = d.AddDate(0, 0, -d.Day()+1)
-	return getMaxTime(d)
+	return time.Date(d.Year(), d.Month(), d.Day(), 0, 0, 0, 0, d.Location())
 }
 
 func getMaxTime(d time.Time) time.Time {
@@ -60,7 +60,8 @@ func getMaxTime(d time.Time) time.Time {
 
 // GetLastDateOfMonth 获取传入的时间所在月份的最后一天，即某月最后一天的0点。如传入time.Now(), 返回当前月份的最后一天0点时间。
 func GetLastDateOfMonth(d time.Time) time.Time {
-	return GetFirstDateOfMonth(d).AddDate(0, 1, -1)
+	d = GetFirstDateOfMonth(d).AddDate(0, 1, -1)
+	return getMaxTime(d)
 }
 
 // GetTimeString 获得天 小时 分钟 秒
