@@ -3,11 +3,11 @@ module github.com/jxwt/tools
 go 1.14
 
 require (
-	github.com/DeanThompson/jpush-api-go-client v0.0.0-20160606124945-0c253969b0ca // indirect
 	github.com/Shopify/sarama v1.26.4
 	github.com/aliyun/aliyun-oss-go-sdk v2.1.3+incompatible
 	github.com/astaxie/beego v1.12.1
 	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394
+	github.com/baiyubin/aliyun-sts-go-sdk v0.0.0-20180326062324-cfa1a18b161f // indirect
 	github.com/boombuler/barcode v1.0.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/jlaffaye/ftp v0.0.0-20200602180915-5563613968bf
@@ -16,7 +16,7 @@ require (
 	github.com/skip2/go-qrcode v0.0.0-20200526175731-7ac0b40b2038
 	github.com/wenzhenxi/gorsa v0.0.0-20191231021121-58a13482fb09
 	github.com/ylywyn/jpush-api-go-client v0.0.0-20190906031852-8c4466c6e369
-	golang.org/x/crypto v0.0.0-20200204104054-c9f3fb736b72
+	golang.org/x/crypto v0.1.0
 	golang.org/x/time v0.0.0-20200630173020-3af7569d3a1e // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
